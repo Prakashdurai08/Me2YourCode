@@ -1,0 +1,140 @@
+// =============================================
+// ADD / EDIT PROJECTS HERE — single data file
+// =============================================
+
+export const projects = [
+  {
+    id: 1,
+    title: "Mobile Banking UI",
+    slug: "mobile-banking-ui",
+    shortDesc: "A modern, intuitive mobile banking interface focused on clarity and trust.",
+    description:
+      "A full-featured mobile banking UI redesign that prioritises clarity, security cues, and one-thumb navigation. The project covered user research, wireframing, high-fidelity Figma prototypes, and a fully responsive front-end build.",
+    coverImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
+      "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+      "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=800&q=80",
+    ],
+    techStack: ["Figma", "React Native", "TypeScript", "Tailwind CSS"],
+    workflow: [
+      { step: "01", title: "Discovery", desc: "User interviews, competitor audit, and pain-point mapping." },
+      { step: "02", title: "Wireframes", desc: "Low-fidelity sketches iterated with stakeholders." },
+      { step: "03", title: "Prototyping", desc: "Interactive Figma prototype for usability testing." },
+      { step: "04", title: "Development", desc: "React Native implementation with accessibility standards." },
+      { step: "05", title: "Testing & Launch", desc: "QA across devices and OS versions before release." },
+    ],
+    features: [
+      "Biometric login & two-factor auth",
+      "Real-time transaction feed",
+      "Spending analytics with charts",
+      "One-tap fund transfer",
+      "Dark mode support",
+      "Fully accessible (WCAG 2.1 AA)",
+    ],
+    liveDemoUrl: "https://example.com",
+    category: "Mobile UI",
+  },
+  {
+    id: 2,
+    title: "Analytics Dashboard",
+    slug: "analytics-dashboard",
+    shortDesc: "Data-rich dashboard with real-time KPIs, charts, and exportable reports.",
+    description:
+      "An enterprise analytics dashboard built for a SaaS product team. The design balances information density with scanability — every metric has context, every chart is actionable.",
+    coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80",
+      "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&q=80",
+    ],
+    techStack: ["React", "Chart.js", "Tailwind CSS", "Node.js", "PostgreSQL"],
+    workflow: [
+      { step: "01", title: "Requirements", desc: "Identified 20+ KPIs with the product and data teams." },
+      { step: "02", title: "IA & Hierarchy", desc: "Card-sorting sessions to prioritise metric visibility." },
+      { step: "03", title: "Design System", desc: "Built a shared component library for consistent charts." },
+      { step: "04", title: "Development", desc: "React + Chart.js with WebSocket live updates." },
+      { step: "05", title: "Delivery", desc: "Iterative releases with A/B testing on layout variants." },
+    ],
+    features: [
+      "Real-time data via WebSocket",
+      "12 chart types including heatmaps",
+      "CSV / PDF report export",
+      "Role-based access control",
+      "Custom date-range filters",
+      "Mobile-responsive layout",
+    ],
+    liveDemoUrl: "https://example.com",
+    category: "Web App",
+  },
+  {
+    id: 3,
+    title: "SaaS Landing Page",
+    slug: "saas-landing-page",
+    shortDesc: "High-converting landing page with micro-animations and clear value propositions.",
+    description:
+      "A conversion-focused landing page for a B2B SaaS tool. Every section was A/B tested — from headline copy to CTA button colour — resulting in a 38% uplift in sign-ups within 30 days.",
+    coverImage: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
+      "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80",
+      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800&q=80",
+      "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+    ],
+    techStack: ["Next.js", "Framer Motion", "Tailwind CSS", "Vercel"],
+    workflow: [
+      { step: "01", title: "Strategy", desc: "Defined ICP, messaging hierarchy, and conversion goals." },
+      { step: "02", title: "Copywriting", desc: "Jobs-to-be-done framing for all headline copy." },
+      { step: "03", title: "Design", desc: "Figma design with motion specs for every animated element." },
+      { step: "04", title: "Development", desc: "Next.js with Framer Motion for scroll-triggered animations." },
+      { step: "05", title: "Optimisation", desc: "Google Optimize A/B tests and Hotjar session recordings." },
+    ],
+    features: [
+      "Scroll-triggered micro-animations",
+      "Social proof ticker with logos",
+      "Pricing toggle (monthly / annual)",
+      "Embedded demo video player",
+      "Cookie-less analytics integration",
+      "99 PageSpeed score on mobile",
+    ],
+    liveDemoUrl: "https://example.com",
+    category: "Landing Page",
+  },
+  {
+    id: 4,
+    title: "E-Commerce Store",
+    slug: "e-commerce-store",
+    shortDesc: "Full-featured online store with seamless checkout and product discovery.",
+    description:
+      "End-to-end e-commerce experience for a fashion brand — product discovery, cart, and checkout optimised to reduce drop-off. Shipped with headless CMS integration for easy catalogue management.",
+    coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+      "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80",
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80",
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+    ],
+    techStack: ["Next.js", "Shopify Storefront API", "Tailwind CSS", "Stripe"],
+    workflow: [
+      { step: "01", title: "UX Audit", desc: "Heatmap analysis of the existing store's drop-off points." },
+      { step: "02", title: "Information Architecture", desc: "Rebuilt category taxonomy and filter logic." },
+      { step: "03", title: "Design", desc: "High-fidelity designs for all 12 core screens." },
+      { step: "04", title: "Development", desc: "Next.js headless storefront connected to Shopify." },
+      { step: "05", title: "Launch", desc: "Staged rollout with redirect mapping and SEO preservation." },
+    ],
+    features: [
+      "Headless Shopify integration",
+      "Wishlist & size guide",
+      "One-page checkout flow",
+      "Stripe & Apple Pay support",
+      "Product zoom & 360° viewer",
+      "Inventory-aware filtering",
+    ],
+    liveDemoUrl: "https://example.com",
+    category: "E-Commerce",
+  },
+];
+
+export default projects;

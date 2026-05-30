@@ -1,0 +1,161 @@
+.services-wrap {
+  padding-bottom: 1rem;
+}
+
+.accents{
+ color:#1a1a1a;
+
+}
+.section-head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.section-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+
+.section-head .section-desc {
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 540px;
+  margin-inline: auto;
+  margin-bottom: 1.5rem;
+}
+
+.section-head .badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}
+
+
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.service-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem 1.5rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--purple);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(106, 75, 201, 0.15);
+}
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(106, 75, 201, 0.1);
+  color: var(--purple);
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.service-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.service-card > p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.service-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.service-from {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.service-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color var(--transition);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+}
+
+.service-cta:hover {
+  color: var(--purple);
+}
+
+@media (max-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ── Section head colour fix (renders on purple background) ── */
+.services-wrap .section-head h2 {
+  color: var(--white);
+}
+
+.services-wrap .section-head h2 .accent {
+  color: var(--text-dark);
+}
+
+.services-wrap .section-head .section-desc {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.services-wrap .section-head .badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}

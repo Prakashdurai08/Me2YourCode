@@ -1,0 +1,138 @@
+.portfolio-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.portfolio-track {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  flex: 1;
+  padding: 0.5rem 0;
+}
+
+.portfolio-track::-webkit-scrollbar {
+  display: none;
+}
+
+.project-card {
+  flex: 0 0 min(300px, 85%);
+  scroll-snap-align: start;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  cursor: pointer;
+  transition: var(--transition);
+  outline: none;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(106, 75, 201, 0.18);
+}
+
+.project-card:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 2px;
+}
+
+.project-card-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card-img-wrap img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-card-img-wrap img {
+  transform: scale(1.06);
+}
+
+.project-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(106, 75, 201, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.project-card:hover .project-card-overlay {
+  opacity: 1;
+}
+
+.view-label {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project-card-body {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.project-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.project-card-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.project-card-body p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.slider-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--purple);
+  background: var(--white);
+  color: var(--purple);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+  display: grid;
+  place-items: center;
+}
+
+.slider-btn:hover {
+  background: var(--purple);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .slider-btn {
+    display: none;
+  }
+
+  .project-card {
+    flex: 0 0 min(260px, 80%);
+  }
+}
