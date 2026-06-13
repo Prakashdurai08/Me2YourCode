@@ -30,7 +30,15 @@ const STEPS = [
 
 export default function HowItWorks() {
   const headRef = useReveal();
-  const stepsRef = useReveal();
+
+  // One independent scroll-reveal observer per step card —
+  // this is what makes each card animate in on its own as you scroll
+  // (especially noticeable on mobile, where cards are stacked).
+  const step0 = useReveal();
+  const step1 = useReveal();
+  const step2 = useReveal();
+  const step3 = useReveal();
+  const stepRefs = [step0, step1, step2, step3];
 
   return (
     <section className="section hiw-wrap" id="process">
@@ -45,30 +53,28 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <div className="hiw-steps reveal" ref={stepsRef}>
+        <div className="hiw-steps">
           {STEPS.map(({ number, icon, title, desc }, i) => (
-            <div className="hiw-step" key={number}>
+            <div className="hiw-step" key={number} ref={stepRefs[i]}>
+              <span className="hiw-number">{number}</span>
               <div className="hiw-step-head">
                 <div className="hiw-icon-wrap">
                   <i className={icon} />
                 </div>
-                <span className="hiw-number">{number}</span>
               </div>
-              <h3>{title}</h3>
-              <p>{desc}</p>
-              {i < STEPS.length - 1 && (
-                <div className="hiw-connector">
-                  <i className="fa-solid fa-arrow-right" />
-                </div>
-              )}
+              <div className="hiw-content">
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+              {i < STEPS.length - 1 && <div className="hiw-connector" aria-hidden="true" />}
             </div>
           ))}
         </div>
 
         <div className="hiw-cta">
           <p>Ready to start? Let's talk about your project.</p>
-          <a
-            href="#contact"
+          
+           <a href="#contact"
             className="btn btn-primary"
             onClick={(e) => {
               e.preventDefault();

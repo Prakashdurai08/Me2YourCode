@@ -62,10 +62,17 @@ const PLANS = [
 export default function Pricing() {
   const [yearly, setYearly] = useState(false);
   const headRef = useReveal();
-  const cardsRef = useReveal();
+
+  // Independent reveal per card for a staggered scroll-in
+  const p0 = useReveal();
+  const p1 = useReveal();
+  const p2 = useReveal();
+  const cardRefs = [p0, p1, p2];
 
   return (
     <section className="section pricing-wrap" id="pricing">
+      <span className="pricing-blob" aria-hidden="true"></span>
+
       <div className="container">
         <div className="pricing-head reveal" ref={headRef}>
           <span className="badge">Pricing</span>
@@ -82,6 +89,7 @@ export default function Pricing() {
             <button
               className={`toggle-switch ${yearly ? "on" : ""}`}
               onClick={() => setYearly((v) => !v)}
+              aria-pressed={yearly}
               aria-label="Toggle billing"
             >
               <span className="toggle-thumb" />
@@ -92,16 +100,22 @@ export default function Pricing() {
           </div>
         </div>
 
-        <div className="pricing-cards reveal" ref={cardsRef}>
-          {PLANS.map(({ name, tagline, monthlyPrice, yearlyPrice, highlight, features, cta }) => (
-            <article className={`pricing-card ${highlight ? "featured" : ""}`} key={name}>
+        <div className="pricing-cards">
+          {PLANS.map(({ name, tagline, monthlyPrice, yearlyPrice, highlight, features, cta }, i) => (
+            <article
+              className={`pricing-card ${highlight ? "featured" : ""}`}
+              key={name}
+              ref={cardRefs[i]}
+            >
               {highlight && <div className="popular-badge">Most Popular</div>}
 
               <div className="pricing-card-top">
                 <h3>{name}</h3>
                 <p className="pricing-tagline">{tagline}</p>
                 <div className="pricing-price">
-                  <span className="price-amt">{yearly ? yearlyPrice : monthlyPrice}</span>
+                  <span className="price-amt" key={yearly ? `${name}-y` : `${name}-m`}>
+                    {yearly ? yearlyPrice : monthlyPrice}
+                  </span>
                   <span className="price-period">{yearly ? "/year" : "/project"}</span>
                 </div>
               </div>
@@ -115,8 +129,8 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <a
-                href="#contact"
+              
+               <a href="#contact"
                 className={`btn ${highlight ? "btn-primary" : "btn-outline"} pricing-btn`}
                 onClick={(e) => {
                   e.preventDefault();
@@ -131,8 +145,8 @@ export default function Pricing() {
 
         <p className="pricing-note">
           <i className="fa-solid fa-circle-info" /> Need something custom?{" "}
-          <a
-            href="#contact"
+          
+            <a href="#contact"
             onClick={(e) => {
               e.preventDefault();
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });

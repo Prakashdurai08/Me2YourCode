@@ -17,6 +17,7 @@
   position: relative;
 }
 
+/* ===== Step card ===== */
 .hiw-step {
   position: relative;
   text-align: center;
@@ -24,8 +25,28 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: #fafafa;
-  transition: var(--transition);
+  overflow: hidden;
+
+  /* Each card reveals independently as it scrolls into view */
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s ease var(--reveal-delay, 0s),
+    transform 0.6s ease var(--reveal-delay, 0s),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
 }
+
+.hiw-step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slight cascade for cards that happen to enter view together (desktop row) */
+.hiw-step:nth-child(1) { --reveal-delay: 0s; }
+.hiw-step:nth-child(2) { --reveal-delay: 0.12s; }
+.hiw-step:nth-child(3) { --reveal-delay: 0.24s; }
+.hiw-step:nth-child(4) { --reveal-delay: 0.36s; }
 
 .hiw-step:hover {
   transform: translateY(-6px);
@@ -33,11 +54,30 @@
   border-color: var(--purple-light);
 }
 
+/* Ghost number watermark */
+.hiw-number {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: rgba(106, 75, 201, 0.08);
+  line-height: 1;
+  letter-spacing: -2px;
+  z-index: 0;
+  transition: color 0.4s ease;
+}
+
+.hiw-step:hover .hiw-number {
+  color: rgba(106, 75, 201, 0.16);
+}
+
 .hiw-step-head {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
@@ -45,20 +85,24 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--purple);
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
   color: var(--white);
   display: grid;
   place-items: center;
   font-size: 1.3rem;
   flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(106, 75, 201, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.hiw-number {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: rgba(106, 75, 201, 0.1);
-  line-height: 1;
-  letter-spacing: -2px;
+.hiw-step:hover .hiw-icon-wrap {
+  transform: rotate(8deg) scale(1.08);
+  box-shadow: 0 12px 28px rgba(106, 75, 201, 0.4);
+}
+
+.hiw-content {
+  position: relative;
+  z-index: 1;
 }
 
 .hiw-step h3 {
@@ -67,25 +111,45 @@
   margin-bottom: 0.6rem;
 }
 
-.hiw-step > p {
+.hiw-step > .hiw-content > p {
   font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.65;
 }
 
-/* Arrow between steps */
+/* ===== Connector (desktop): dashed line + flowing dot ===== */
 .hiw-connector {
   position: absolute;
-  top: 50%;
-  right: -1rem;
-  transform: translateY(-50%);
-  color: var(--purple);
-  font-size: 0.9rem;
-  opacity: 0.45;
+  top: 2.85rem;
+  right: -1.5rem;
+  width: 1.5rem;
+  height: 2px;
+  background: repeating-linear-gradient(to right, var(--purple-light) 0 6px, transparent 6px 12px);
   z-index: 1;
   pointer-events: none;
 }
 
+.hiw-connector::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+  transform: translateY(-50%);
+  animation: flowDot 2.4s linear infinite;
+}
+
+@keyframes flowDot {
+  0%   { left: 0; opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { left: calc(100% - 6px); opacity: 0; }
+}
+
+/* ===== CTA ===== */
 .hiw-cta {
   margin-top: 2.5rem;
   padding-top: 2rem;
@@ -102,10 +166,11 @@
   font-size: 1rem;
 }
 
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 992px) {
   .hiw-steps {
     grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
   }
 
   .hiw-connector {
@@ -114,45 +179,70 @@
 }
 
 @media (max-width: 540px) {
+  .hiw-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  /* Vertical timeline layout */
   .hiw-steps {
     grid-template-columns: 1fr;
+    gap: 0;
+    row-gap: 0;
+  }
+
+  .hiw-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    padding: 0 0 2.25rem 0;
+    /* slightly more travel distance for a clearer per-step reveal on mobile */
+    transform: translateY(36px);
+  }
+
+  .hiw-step.visible {
+    transform: translateY(0);
+  }
+
+  .hiw-step:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .hiw-step.visible:hover {
+    transform: none;
+  }
+
+  .hiw-step-head {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .hiw-number {
+    display: none;
+  }
+
+  /* Vertical connecting line down the timeline */
+  .hiw-step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 56px;
+    left: 27px;
+    width: 2px;
+    height: calc(100% - 40px);
+    background: repeating-linear-gradient(to bottom, var(--purple-light) 0 6px, transparent 6px 12px);
+    z-index: 0;
+  }
+
+  .hiw-connector {
+    display: none;
   }
 
   .hiw-cta {
     flex-direction: column;
     text-align: center;
   }
-}
-.section-head {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.section-head .badge {
-  display: inline-block;
-  background: var(--purple);
-  color: var(--white);
-  font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
-}
-
-.section-head h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text-dark); /* ensure visible */
-  line-height: 1.3;
-}
-
-.section-head h2 .accent {
-  color: var(--purple); /* highlight word */
-}
-
-.section-head .section-desc {
-  font-size: 1rem;
-  color: var(--text-muted);
-  max-width: 600px;
-  margin: 0 auto;
 }

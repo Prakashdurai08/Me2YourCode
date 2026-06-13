@@ -1,36 +1,66 @@
 .services-wrap {
+  position: relative;
+  overflow: hidden;
   padding-bottom: 1rem;
 }
 
-.accents{
- color:#1a1a1a;
-
+/* Decorative background blobs on the purple section */
+.services-blob {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: 0;
 }
+
+.blob-a {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -80px;
+}
+
+.blob-b {
+  width: 240px;
+  height: 240px;
+  bottom: -80px;
+  right: -60px;
+}
+
+.services-wrap .container {
+  position: relative;
+  z-index: 1;
+}
+
+.accents {
+  color: #1a1a1a;
+}
+
 .section-head {
   text-align: center;
   margin-bottom: 2.5rem;
 }
 
-.section-head h2 {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  font-weight: 700;
-  margin-bottom: 0.75rem;
+.services-wrap .section-head h2 {
   color: var(--white);
 }
 
-.section-head .section-desc {
-  color: rgba(255, 255, 255, 0.75);
+.services-wrap .section-head h2 .accent {
+  color: var(--text-dark);
+}
+
+.services-wrap .section-head .section-desc {
+  color: rgba(255, 255, 255, 0.78);
   max-width: 540px;
   margin-inline: auto;
   margin-bottom: 1.5rem;
 }
 
-.section-head .badge {
+.services-wrap .section-head .badge {
   background: rgba(255, 255, 255, 0.2);
   color: var(--white);
 }
-
-
 
 .services-grid {
   display: grid;
@@ -47,10 +77,30 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: var(--transition);
   position: relative;
   overflow: hidden;
+
+  /* Independent staggered reveal */
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s ease var(--reveal-delay, 0s),
+    transform 0.5s ease var(--reveal-delay, 0s),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
 }
+
+.service-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card:nth-child(1) { --reveal-delay: 0s; }
+.service-card:nth-child(2) { --reveal-delay: 0.06s; }
+.service-card:nth-child(3) { --reveal-delay: 0.12s; }
+.service-card:nth-child(4) { --reveal-delay: 0.18s; }
+.service-card:nth-child(5) { --reveal-delay: 0.24s; }
+.service-card:nth-child(6) { --reveal-delay: 0.3s; }
 
 .service-card::before {
   content: "";
@@ -59,7 +109,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--purple);
+  background: linear-gradient(90deg, var(--purple), var(--purple-light));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
@@ -72,18 +122,27 @@
 .service-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(106, 75, 201, 0.15);
+  border-color: rgba(106, 75, 201, 0.25);
 }
 
 .service-icon {
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: rgba(106, 75, 201, 0.1);
-  color: var(--purple);
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+  color: var(--white);
   display: grid;
   place-items: center;
   font-size: 1.4rem;
   flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(106, 75, 201, 0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-radius 0.4s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: rotate(-8deg) scale(1.08);
+  box-shadow: 0 12px 26px rgba(106, 75, 201, 0.35);
+  border-radius: 50%;
 }
 
 .service-card h3 {
@@ -127,13 +186,26 @@
   font-family: var(--font);
 }
 
-.service-cta:hover {
+.service-cta i {
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-cta {
   color: var(--purple);
+}
+
+.service-card:hover .service-cta i {
+  transform: translateX(4px);
 }
 
 @media (max-width: 992px) {
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .blob-a, .blob-b {
+    width: 180px;
+    height: 180px;
   }
 }
 
@@ -141,21 +213,4 @@
   .services-grid {
     grid-template-columns: 1fr;
   }
-}
-/* ── Section head colour fix (renders on purple background) ── */
-.services-wrap .section-head h2 {
-  color: var(--white);
-}
-
-.services-wrap .section-head h2 .accent {
-  color: var(--text-dark);
-}
-
-.services-wrap .section-head .section-desc {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.services-wrap .section-head .badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--white);
 }

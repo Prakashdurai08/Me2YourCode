@@ -1,16 +1,32 @@
 .pricing-wrap {
+  position: relative;
+  overflow: hidden;
   padding-bottom: 2rem;
-  
+}
+
+/* Decorative background blob */
+.pricing-blob {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pricing-wrap .container {
+  position: relative;
+  z-index: 1;
 }
 
 .pricing-head {
   text-align: center;
   margin-bottom: 2.5rem;
-  
-}
-.assents{
- color:#1a1a1a;
-
 }
 
 .pricing-head h2 {
@@ -18,7 +34,11 @@
   font-weight: 700;
   margin-bottom: 0.75rem;
   color: var(--white);
-} 
+}
+
+.pricing-head h2 .accents {
+  color: var(--text-dark);
+}
 
 .pricing-head .section-desc {
   color: rgba(255, 255, 255, 0.75);
@@ -58,12 +78,13 @@
   border: none;
   cursor: pointer;
   position: relative;
-  transition: background 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
   flex-shrink: 0;
 }
 
 .toggle-switch.on {
   background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
 }
 
 .toggle-thumb {
@@ -74,12 +95,13 @@
   height: 18px;
   border-radius: 50%;
   background: var(--purple);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
   display: block;
 }
 
 .toggle-switch.on .toggle-thumb {
   transform: translateX(20px);
+  box-shadow: 0 0 0 3px rgba(106, 75, 201, 0.15);
 }
 
 .save-badge {
@@ -91,6 +113,13 @@
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   margin-left: 0.35rem;
+  display: inline-block;
+  animation: saveBounce 2.4s ease-in-out infinite;
+}
+
+@keyframes saveBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
 }
 
 /* Cards */
@@ -110,8 +139,25 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  transition: var(--transition);
+
+  /* Independent staggered reveal */
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s ease var(--reveal-delay, 0s),
+    transform 0.5s ease var(--reveal-delay, 0s),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
 }
+
+.pricing-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pricing-card:nth-child(1) { --reveal-delay: 0s; }
+.pricing-card:nth-child(2) { --reveal-delay: 0.1s; }
+.pricing-card:nth-child(3) { --reveal-delay: 0.2s; }
 
 .pricing-card:hover {
   transform: translateY(-6px);
@@ -120,13 +166,17 @@
 
 .pricing-card.featured {
   border-color: var(--purple);
-  background: var(--white);
+  background: linear-gradient(160deg, var(--white) 0%, #faf8ff 100%);
   box-shadow: 0 24px 64px rgba(106, 75, 201, 0.25);
+}
+
+.pricing-card.featured.visible {
   transform: translateY(-10px);
 }
 
 .pricing-card.featured:hover {
   transform: translateY(-16px);
+  box-shadow: 0 28px 70px rgba(106, 75, 201, 0.32);
 }
 
 .popular-badge {
@@ -134,13 +184,14 @@
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--purple);
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
   color: var(--white);
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.3rem 1rem;
   border-radius: 999px;
   white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(106, 75, 201, 0.35);
 }
 
 .pricing-card-top h3 {
@@ -159,12 +210,20 @@
   display: flex;
   align-items: baseline;
   gap: 0.35rem;
+  min-height: 2.5rem;
 }
 
 .price-amt {
   font-size: clamp(1.6rem, 3vw, 2rem);
   font-weight: 800;
   color: var(--purple);
+  display: inline-block;
+  animation: priceIn 0.4s ease;
+}
+
+@keyframes priceIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .price-period {
@@ -186,10 +245,16 @@
   align-items: center;
   gap: 0.6rem;
   font-size: 0.875rem;
+  transition: transform 0.2s ease;
+}
+
+.pricing-card:hover .pricing-features li:not(.excluded) {
+  transform: translateX(2px);
 }
 
 .pricing-features li.excluded {
   opacity: 0.4;
+  text-decoration: line-through;
 }
 
 .pricing-features .fa-circle-check {
@@ -242,12 +307,20 @@
   }
 
   .pricing-card.featured {
-    transform: none;
     order: -1;
+  }
+
+  .pricing-card.featured.visible {
+    transform: translateY(0);
   }
 
   .pricing-card.featured:hover {
     transform: translateY(-6px);
+  }
+
+  .pricing-blob {
+    width: 240px;
+    height: 240px;
   }
 }
 

@@ -42,10 +42,22 @@ const SERVICES = [
 
 export default function Services() {
   const headRef = useReveal();
-  const gridRef = useReveal();
+
+  // Independent reveal observer per card — same step-by-step
+  // scroll-in behaviour as the HowItWorks section.
+  const c0 = useReveal();
+  const c1 = useReveal();
+  const c2 = useReveal();
+  const c3 = useReveal();
+  const c4 = useReveal();
+  const c5 = useReveal();
+  const cardRefs = [c0, c1, c2, c3, c4, c5];
 
   return (
     <section className="section services-wrap" id="services">
+      <span className="services-blob blob-a" aria-hidden="true"></span>
+      <span className="services-blob blob-b" aria-hidden="true"></span>
+
       <div className="container">
         <div className="section-head reveal" ref={headRef}>
           <span className="badge">What I Offer</span>
@@ -57,9 +69,9 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="services-grid reveal" ref={gridRef}>
-          {SERVICES.map(({ icon, title, desc, from }) => (
-            <article className="service-card" key={title}>
+        <div className="services-grid">
+          {SERVICES.map(({ icon, title, desc, from }, i) => (
+            <article className="service-card" key={title} ref={cardRefs[i]}>
               <div className="service-icon">
                 <i className={icon} />
               </div>
@@ -67,8 +79,8 @@ export default function Services() {
               <p>{desc}</p>
               <div className="service-footer">
                 <span className="service-from">From {from}</span>
-                <a
-                  href="#contact"
+                
+                 <a href="#contact"
                   className="service-cta"
                   onClick={(e) => {
                     e.preventDefault();
