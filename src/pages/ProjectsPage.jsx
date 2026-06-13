@@ -11,7 +11,7 @@ export default function ProjectsPage() {
         <div className="projects-page-head">
           <span className="badge">Portfolio</span>
           <h1>
-            All <span className="accent">Projects</span>
+            All <span className="accents">Projects</span>
           </h1>
           <p>Every project is a story — here are mine.</p>
         </div>

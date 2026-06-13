@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import { projects } from "../data/projects";
 import "./ProjectDetail.css";
@@ -31,6 +32,12 @@ export default function ProjectDetail() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
+  /* Lock background scroll while lightbox is open */
+  useEffect(() => {
+    document.body.style.overflow = lightbox ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [lightbox]);
+
   if (!project) {
     return (
       <main className="not-found">
@@ -51,46 +58,48 @@ export default function ProjectDetail() {
     <main className="project-detail">
 
       {/* ── Hero Slider ─────────────────────────────────── */}
-      <section className="pd-hero">
-        <div className="pd-hero-track" style={{ transform: `translateX(-${heroIndex * 100}%)` }}>
-          {project.images.map((img, i) => (
-            <div className="pd-hero-slide" key={i}>
-              <img src={img} alt={`${project.title} screenshot ${i + 1}`} />
-            </div>
-          ))}
-        </div>
-
-        {/* Overlay content */}
-        <div className="pd-hero-overlay">
-          <button className="pd-back-btn" onClick={() => navigate(-1)}>
-            <i className="fa-solid fa-arrow-left" /> Back
-          </button>
-          <div className="pd-hero-meta">
-            <span className="badge">{project.category}</span>
-            <h1>{project.title}</h1>
+      <div className="container pd-hero-wrap">
+        <section className="pd-hero">
+          <div className="pd-hero-track" style={{ transform: `translateX(-${heroIndex * 100}%)` }}>
+            {project.images.map((img, i) => (
+              <div className="pd-hero-slide" key={i}>
+                <img src={img} alt={`${project.title} screenshot ${i + 1}`} />
+              </div>
+            ))}
           </div>
-        </div>
 
-        {/* Slider controls */}
-        <button className="pd-slide-btn prev" onClick={() => goHero(-1)} aria-label="Previous">
-          <i className="fa-solid fa-chevron-left" />
-        </button>
-        <button className="pd-slide-btn next" onClick={() => goHero(1)} aria-label="Next">
-          <i className="fa-solid fa-chevron-right" />
-        </button>
+          {/* Overlay content */}
+          <div className="pd-hero-overlay">
+            <button className="pd-back-btn" onClick={() => navigate(-1)}>
+              <i className="fa-solid fa-arrow-left" /> Back
+            </button>
+            <div className="pd-hero-meta">
+              <span className="badge">{project.category}</span>
+              <h1>{project.title}</h1>
+            </div>
+          </div>
 
-        {/* Dots */}
-        <div className="pd-hero-dots">
-          {project.images.map((_, i) => (
-            <button
-              key={i}
-              className={i === heroIndex ? "active" : ""}
-              onClick={() => setHeroIndex(i)}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      </section>
+          {/* Slider controls */}
+          <button className="pd-slide-btn prev" onClick={() => goHero(-1)} aria-label="Previous">
+            <i className="fa-solid fa-chevron-left" />
+          </button>
+          <button className="pd-slide-btn next" onClick={() => goHero(1)} aria-label="Next">
+            <i className="fa-solid fa-chevron-right" />
+          </button>
+
+          {/* Dots */}
+          <div className="pd-hero-dots">
+            {project.images.map((_, i) => (
+              <button
+                key={i}
+                className={i === heroIndex ? "active" : ""}
+                onClick={() => setHeroIndex(i)}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </section>
+      </div>
 
       {/* ── Body ────────────────────────────────────────── */}
       <div className="container pd-body">
@@ -190,11 +199,15 @@ export default function ProjectDetail() {
       </div>
 
       {/* ── Lightbox ────────────────────────────────────── */}
-      {lightbox && (
+      {/* ── Lightbox ────────────────────────────────────── */}
+      {lightbox && createPortal(
         <div className="lightbox" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
-          <button className="lightbox-close" aria-label="Close"><i className="fa-solid fa-xmark" /></button>
+          <button className="lightbox-close" aria-label="Close" onClick={() => setLightbox(null)}>
+            <i className="fa-solid fa-xmark" />
+          </button>
           <img src={lightbox} alt="Full size" onClick={(e) => e.stopPropagation()} />
-        </div>
+        </div>,
+        document.body
       )}
     </main>
   );

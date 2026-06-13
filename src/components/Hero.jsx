@@ -13,10 +13,16 @@ export default function Hero() {
   return (
     <section className="hero-wrap" id="about">
       <div className="container hero-card reveal" ref={cardRef}>
+        {/* Decorative animated gradient blobs */}
+        <div className="hero-card-bg" aria-hidden="true">
+          <span className="hero-blob hero-blob-1"></span>
+          <span className="hero-blob hero-blob-2"></span>
+        </div>
+
         <div className="hero-grid">
           {/* Content */}
           <div className="hero-content">
-            <span className="badge">Welcome</span>
+            <span className="badge badge-pop">Welcome</span>
 
             <h1 className="hero-title">
               I create stunning{" "}
@@ -25,14 +31,11 @@ export default function Hero() {
                 <span className="typing-cursor">|</span>
               </span>
             </h1>
-            {/* <h1 className="hero-title">
-              I have <span className="accent">Creative Web Design</span> Experience
-            </h1> */}
             <p className="hero-quote">
               - "I create clean, responsive websites that meet business needs and look great on all devices."
             </p>
             <div className="hero-actions">
-              <a href="#contact" className="btn btn-primary"
+              <a href="#contact" className="btn btn-primary btn-shine"
                 onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}>
                 Contact Me
               </a>
@@ -45,9 +48,20 @@ export default function Hero() {
 
           {/* Visual */}
           <div className="hero-visual reveal delay-1" ref={visualRef}>
-            <div className="hero-frame">
-              <img src="/assets/mine.png" alt="Profile" width="380" height="480" />
+            <div className="hero-frame-wrap">
+              <div className="hero-frame">
+                <img src="/assets/mine.png" alt="Profile" width="380" height="480" />
+              </div>
+
+              {/* Floating glass chips */}
+              <div className="floating-chip chip-status">
+                <span className="status-dot"></span> Available for Projects
+              </div>
+              <div className="floating-chip chip-skill">
+                <i className="fa-solid fa-code"></i> Clean Code
+              </div>
             </div>
+
             <div className="hero-social">
               <span>Follow me on</span>
               <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f" /></a>

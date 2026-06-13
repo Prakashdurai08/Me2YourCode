@@ -3,18 +3,87 @@
 }
 
 .hero-card {
+  position: relative;
   background: var(--white);
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem 0;
   box-shadow: var(--shadow);
 }
 
+/* ===== Decorative animated gradient blobs ===== */
+.hero-card-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.22;
+}
+
+.hero-blob-1 {
+  width: 320px;
+  height: 320px;
+  background: var(--purple);
+  top: -120px;
+  right: -90px;
+  animation: blobFloat 14s ease-in-out infinite;
+}
+
+.hero-blob-2 {
+  width: 260px;
+  height: 260px;
+  background: var(--purple-light);
+  bottom: -100px;
+  left: -80px;
+  animation: blobFloat 18s ease-in-out infinite reverse;
+}
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, -30px) scale(1.12); }
+}
+
 .hero-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: center;
   padding-bottom: 2rem;
+}
+
+/* ===== Staggered entrance for hero content ===== */
+.hero-content > * {
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.25s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.35s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Badge pop-in ===== */
+.badge-pop {
+  animation: popIn 0.5s ease-out both, fadeUp 0.7s ease both;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0.7); }
+  60%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
 
 .hero-title {
@@ -37,17 +106,134 @@
   gap: 1rem;
 }
 
+/* ===== Buttons: shine sweep on hover ===== */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.btn-shine:hover::after {
+  left: 130%;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* ===== Hero visual / image frame ===== */
+.hero-visual {
+  position: relative;
+}
+
+.hero-frame-wrap {
+  position: relative;
+}
+
+/* Animated glow ring behind the photo */
+.hero-frame-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: calc(var(--radius-md) + 14px);
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
+  opacity: 0.28;
+  filter: blur(22px);
+  z-index: 0;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.22; transform: scale(1); }
+  50%      { opacity: 0.42; transform: scale(1.035); }
+}
+
 .hero-frame {
+  position: relative;
+  z-index: 1;
   border: 6px solid var(--purple);
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--purple-light);
+  transition: transform 0.5s ease;
+}
+
+.hero-visual:hover .hero-frame {
+  transform: translateY(-6px);
 }
 
 .hero-frame img {
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+/* ===== Floating glass chips ===== */
+.floating-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  z-index: 2;
+  white-space: nowrap;
+  animation: chipFloat 5s ease-in-out infinite;
+}
+
+.chip-status {
+  top: 6%;
+  right: -6%;
+  animation-delay: 0s;
+}
+
+.chip-skill {
+  bottom: 8%;
+  left: -6%;
+  animation-delay: 1.2s;
+}
+
+.chip-skill i {
+  color: var(--purple);
+}
+
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
 .hero-social {
@@ -74,10 +260,13 @@
 
 .hero-social a:hover {
   background: var(--purple-dark);
-  transform: scale(1.08);
+  transform: scale(1.08) rotate(8deg);
 }
 
+/* ===== Stats ===== */
 .stats {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--border);
@@ -96,6 +285,29 @@
   font-size: 0.9rem;
 }
 
+/* ===== Typing text ===== */
+.typing-text {
+  display: inline;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: var(--purple);
+  animation: blink 0.75s step-end infinite;
+  font-weight: 300;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 992px) {
   .hero-grid {
     grid-template-columns: 1fr;
@@ -114,20 +326,39 @@
 
   .hero-visual {
     order: -1;
+    margin-bottom: 0.5rem;
   }
-}
-.typing-text {
-  display: inline;
+
+  .floating-chip {
+    font-size: 0.7rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  .chip-status {
+    top: 10px;
+    right: 10px;
+  }
+
+  .chip-skill {
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .hero-blob-1 { width: 200px; height: 200px; }
+  .hero-blob-2 { width: 160px; height: 160px; }
 }
 
-.typing-cursor {
-  display: inline-block;
-  animation: blink 0.75s step-end infinite;
-  font-weight: 300;
-  margin-left: 1px;
-}
+@media (max-width: 480px) {
+  .chip-skill {
+    display: none;
+  }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    flex: 1;
+    text-align: center;
+  }
 }
