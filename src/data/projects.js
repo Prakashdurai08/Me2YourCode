@@ -77,19 +77,22 @@ export const projects = [
   },
   {
     id: 3,
-    title: "SaaS Landing Page",
-    slug: "saas-landing-page",
-    shortDesc: "High-converting landing page with micro-animations and clear value propositions.",
+    title: "Bodycraft",
+    slug: "Beauty Salon Management Website",
+    shortDesc: "Salon platform — smooth appointments and personal brand showcase",
     description:
-      "A conversion-focused landing page for a B2B SaaS tool. Every section was A/B tested — from headline copy to CTA button colour — resulting in a 38% uplift in sign-ups within 30 days.",
-    coverImage: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
+      "A conversion‑driven beauty website — clear service presentation, smooth client pre‑booking, and a professional portfolio showcase for salon functions and individual make‑up offerings.",
+    coverImage: "/assets/projects/fashion/no1.png",
     images: [
-      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
-      "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80",
-      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800&q=80",
-      "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+     "/assets/projects/fashion/no1.png",
+     "/assets/projects/fashion/no2.png",
+     "/assets/projects/fashion/no3.png",
+     "/assets/projects/fashion/no4.png",
+     "/assets/projects/fashion/no5.png",
+     "/assets/projects/fashion/no6.png",
+     
     ],
-    techStack: ["Next.js", "Framer Motion", "Tailwind CSS", "Vercel"],
+    techStack: ["React.js", "Framer Motion", "Tailwind CSS", "Vercel"],
     workflow: [
       { step: "01", title: "Strategy", desc: "Defined ICP, messaging hierarchy, and conversion goals." },
       { step: "02", title: "Copywriting", desc: "Jobs-to-be-done framing for all headline copy." },
@@ -106,7 +109,7 @@ export const projects = [
       "99 PageSpeed score on mobile",
     ],
     liveDemoUrl: "https://example.com",
-    category: "Landing Page",
+    category: "Beauty Salon Management Website",
   },
   {
     id: 4,

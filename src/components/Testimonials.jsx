@@ -1,54 +1,76 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import useReveal from "../hooks/useReveal";
 import "./Testimonials.css";
-
 const GRID_REVIEWS = [
   {
-    text: "Tanvir transformed our mobile app with a clean and intuitive interface that our users love.",
-    name: "Alex Johnson",
-    role: "Product Manager, London",
+    text: "The food billing app made our hotel sales quick and simple. Staff handle bills easily now.",
+    name: "Arun Kumar",
+    role: "Hotel Owner, Madurai",
   },
   {
-    text: "He quickly understood our business needs and delivered designs that exceeded expectations.",
-    name: "Sachin Tendulkar",
-    role: "Startup Founder, Dubai",
+    text: "The clinic appointment software keeps patient bookings organized. No confusion, smooth check-ins.",
+    name: "Dr. Meena Raj",
+    role: "Clinic Owner, Coimbatore",
   },
   {
-    text: "A great collaborator with impressive attention to detail and user-centric thinking.",
-    name: "Jackie Chan",
-    role: "UX Lead, Singapore",
+    text: "Our beauty salon website brought more online customers. Easy to use and looks professional.",
+    name: "Priya Lakshmi",
+    role: "Salon Manager, Tirunelveli",
+  },
+  {
+    text: "The construction website shows our projects clearly. Clients trust us more after seeing it.",
+    name: "Suresh Babu",
+    role: "Builder, Chennai",
   },
 ];
 
 const CAROUSEL_SLIDES = [
   {
-    text: "Excellent communication and delivered exactly what I needed for my Fiverr project.",
-    author: "Gilbertogra, Fiverr Client",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop",
+    text: "The food billing app made our hotel sales quick and simple.",
+    author: "Arun Kumar, Hotel Owner",
+    rating: 5,
   },
   {
-    text: "Tanvir transformed our mobile app with a clean and intuitive interface that our users love.",
-    author: "Alex Johnson, Product Manager",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop",
+    text: "The clinic appointment software keeps patient bookings organized.",
+    author: "Dr. Meena Raj, Clinic Owner",
+    rating: 4,
   },
   {
-    text: "A great collaborator with impressive attention to detail and user-centric thinking.",
-    author: "Jackie Chan, UX Lead",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop",
+    text: "Our beauty salon website brought more online customers.",
+    author: "Priya Lakshmi, Salon Manager",
+    rating: 3.5,
+  },
+  {
+    text: "The construction website shows our projects clearly.",
+    author: "Suresh Babu, Builder",
+    rating: 4.5,
   },
 ];
 
+
+const AUTO_ROTATE_MS = 6000;
+
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const cardRef = useReveal();
-  const intervalRef = useRef(null);
+
+  // Independent reveal per grid card — same step-by-step
+  // scroll-in behaviour used in Services / Pricing.
+  const g0 = useReveal();
+  const g1 = useReveal();
+  const g2 = useReveal();
+  const g3 = useReveal();
+  // const gridRefs = [g0, g1, g2,g3];
+  const gridRefs = GRID_REVIEWS.map(() => useReveal());
 
   const goTo = (i) => setIndex((i + CAROUSEL_SLIDES.length) % CAROUSEL_SLIDES.length);
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => goTo(index + 1), 6000);
-    return () => clearInterval(intervalRef.current);
-  }, [index]);
+    if (paused) return;
+    const t = setInterval(() => goTo(index + 1), AUTO_ROTATE_MS);
+    return () => clearInterval(t);
+  }, [index, paused]);
 
   const slide = CAROUSEL_SLIDES[index];
 
@@ -66,29 +88,70 @@ export default function Testimonials() {
 
         {/* Grid cards */}
         <div className="testimonials-grid">
-          {GRID_REVIEWS.map(({ text, name, role }) => (
-            <article className="testimonial-card" key={name}>
+          {GRID_REVIEWS.map(({ text, name, role }, i) => (
+            <article className="testimonial-card" key={name} ref={gridRefs[i]}>
+              <i className="fa-solid fa-quote-left card-quote-icon" aria-hidden="true" />
               <p>"{text}"</p>
-              <h4>{name}</h4>
-              <span>{role}</span>
+              <div className="testimonial-author">
+                <span className="author-avatar">{name.charAt(0)}</span>
+                <div>
+                  <h4>{name}</h4>
+                  <span>{role}</span>
+                </div>
+              </div>
             </article>
           ))}
         </div>
 
         {/* Carousel */}
-        <div className="testimonial-carousel">
-          <button className="carousel-btn" onClick={() => goTo(index - 1)} aria-label="Previous">
+        <div
+          className="testimonial-carousel"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <button className="carousel-btn" onClick={() => goTo(index - 1)} aria-label="Previous testimonial">
             <i className="fa-solid fa-chevron-left" />
           </button>
 
-          <div className="carousel-slide">
-            <i className="fa-solid fa-quote-left quote-icon" />
-            <img className="carousel-avatar" src={slide.img} alt={slide.author} />
+          <div className="carousel-slide" key={index}>
+            <i className="fa-solid fa-quote-left quote-icon" aria-hidden="true" />
+            <div className="carousel-stars" aria-hidden="true">
+              {[1, 2, 3, 4, 5].map((star, i) => {
+                if (slide.rating >= star) {
+                  return (
+                    <i
+                      key={i}
+                      className="fa-solid fa-star"
+                      style={{ animationDelay: `${i * 0.08}s` }}
+                    />
+                  );
+                }
+
+                if (slide.rating >= star - 0.5) {
+                  return (
+                    <i
+                      key={i}
+                      className="fa-solid fa-star-half-stroke"
+                      style={{ animationDelay: `${i * 0.08}s` }}
+                    />
+                  );
+                }
+
+                return (
+                  <i
+                    key={i}
+                    className="fa-regular fa-star"
+                    style={{ animationDelay: `${i * 0.08}s` }}
+                  />
+                );
+              })}
+            </div>
+            <span className="rating-text">{slide.rating}/5</span>
             <p className="carousel-text">"{slide.text}"</p>
             <p className="carousel-author">{slide.author}</p>
           </div>
 
-          <button className="carousel-btn" onClick={() => goTo(index + 1)} aria-label="Next">
+          <button className="carousel-btn" onClick={() => goTo(index + 1)} aria-label="Next testimonial">
             <i className="fa-solid fa-chevron-right" />
           </button>
 
@@ -98,8 +161,15 @@ export default function Testimonials() {
                 key={i}
                 className={i === index ? "active" : ""}
                 onClick={() => setIndex(i)}
-                aria-label={`Slide ${i + 1}`}
-              />
+                aria-label={`Go to testimonial ${i + 1}`}
+              >
+                {i === index && !paused && (
+                  <span
+                    className="dot-progress"
+                    style={{ animationDuration: `${AUTO_ROTATE_MS}ms` }}
+                  />
+                )}
+              </button>
             ))}
           </div>
         </div>

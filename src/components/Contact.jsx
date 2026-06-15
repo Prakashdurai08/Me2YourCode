@@ -7,9 +7,9 @@ import "./Contact.css";
 // ✅ PASTE YOUR KEYS HERE — only 4 values to change
 // ═══════════════════════════════════════════════════
 const WEB3FORMS_KEY       = "635fa833-b858-420f-82d0-44ef55f56d72";
-const EMAILJS_SERVICE_ID  = "service_p3npe3n";
-const EMAILJS_TEMPLATE_ID = "template_b96fuw9";
-const EMAILJS_PUBLIC_KEY  = "n8tmvdvbBA_exbIGz";
+const EMAILJS_SERVICE_ID  = "service_rfqtxq8";
+const EMAILJS_TEMPLATE_ID = "template_8nbqtvh";
+const EMAILJS_PUBLIC_KEY  = "eIQMIpO5LGVA4iaZp";
 // ═══════════════════════════════════════════════════
 
 export default function Contact() {
@@ -71,13 +71,13 @@ export default function Contact() {
       // ────────────────────────────────────────────────
       if (ownerJson.success) {
         setStatus({
-          msg: "✅ Message sent! Check your email for confirmation.",
+          msg: "Message sent! Check your email for confirmation.",
           type: "success",
         });
         formRef.current.reset();
       } else {
         setStatus({
-          msg: "❌ Something went wrong. Please try WhatsApp.",
+          msg: "Something went wrong. Please try WhatsApp.",
           type: "error",
         });
       }
@@ -85,7 +85,7 @@ export default function Contact() {
     } catch (err) {
       console.error("Form error:", err);
       setStatus({
-        msg: "❌ Network error. Please try WhatsApp.",
+        msg: "Network error. Please try WhatsApp.",
         type: "error",
       });
     } finally {
@@ -96,6 +96,7 @@ export default function Contact() {
   return (
     <section className="section" id="contact">
       <div className="container contact-grid reveal" ref={gridRef}>
+        <span className="contact-blob" aria-hidden="true"></span>
 
         {/* ── Left — Contact Info ────────────────── */}
         <div className="section-intro">
@@ -103,22 +104,33 @@ export default function Contact() {
           <h2>
             Let's Discuss Your <span className="accent">Project</span>
           </h2>
-          <p style={{ color: "var(--text-muted)", marginBottom: "1.5rem" }}>
+          <p className="contact-lead">
             Fill the form and I'll get back to you within 24 hours.
             Or reach me directly below.
           </p>
+
+          <div className="availability-chip">
+            <span className="status-dot"></span> Usually responds within a few hours
+          </div>
+
           <ul className="contact-info">
             <li>
-              <i className="fa-solid fa-phone" />
-              <span>+91 98765 43210</span>
+              <a href="tel:+919876543210" className="contact-info-link">
+                <span className="contact-icon"><i className="fa-solid fa-phone" /></span>
+                <span>+91 98765 43210</span>
+              </a>
             </li>
             <li>
-              <i className="fa-solid fa-envelope" />
-              <span>duraiprakash08@gmail.com</span>
+              <a href="mailto:duraiprakash08@gmail.com" className="contact-info-link">
+                <span className="contact-icon"><i className="fa-solid fa-envelope" /></span>
+                <span>duraiprakash08@gmail.com</span>
+              </a>
             </li>
             <li>
-              <i className="fa-solid fa-location-dot" />
-              <span>Your City, India</span>
+              <span className="contact-info-link static">
+                <span className="contact-icon"><i className="fa-solid fa-location-dot" /></span>
+                <span>Your City, India</span>
+              </span>
             </li>
           </ul>
         </div>
@@ -134,43 +146,40 @@ export default function Contact() {
           />
 
           <div className="form-row">
-            <input
-              type="text"
-              name="name"
-              placeholder="Full name"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your email"
-              required
-            />
+            <div className="form-field">
+              <input type="text" name="name" placeholder=" " required />
+              <label>Full name</label>
+              <i className="fa-solid fa-user field-icon" aria-hidden="true" />
+            </div>
+            <div className="form-field">
+              <input type="email" name="email" placeholder=" " required />
+              <label>Your email</label>
+              <i className="fa-solid fa-envelope field-icon" aria-hidden="true" />
+            </div>
           </div>
 
           <div className="form-row">
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone number"
-            />
-            <input
-              type="text"
-              name="budget"
-              placeholder="Budget (e.g. ₹10,000)"
-            />
+            <div className="form-field">
+              <input type="tel" name="phone" placeholder=" " />
+              <label>Phone number</label>
+              <i className="fa-solid fa-phone field-icon" aria-hidden="true" />
+            </div>
+            <div className="form-field">
+              <input type="text" name="budget" placeholder=" " />
+              <label>Budget (e.g. ₹10,000)</label>
+              <i className="fa-solid fa-indian-rupee-sign field-icon" aria-hidden="true" />
+            </div>
           </div>
 
-          <textarea
-            name="message"
-            rows="5"
-            placeholder="Tell me about your project..."
-            required
-          />
+          <div className="form-field textarea-field">
+            <textarea name="message" rows="5" placeholder=" " required />
+            <label>Tell me about your project...</label>
+            <i className="fa-solid fa-comment-dots field-icon" aria-hidden="true" />
+          </div>
 
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary btn-shine"
             disabled={sending}
           >
             {sending ? (
@@ -186,6 +195,7 @@ export default function Contact() {
 
           {status.msg && (
             <p className={`form-status ${status.type}`} role="status">
+              <i className={`fa-solid ${status.type === "success" ? "fa-circle-check" : "fa-circle-exclamation"}`} />
               {status.msg}
             </p>
           )}
