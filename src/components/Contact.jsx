@@ -60,7 +60,7 @@ export default function Contact() {
         {
           to_email:     clientEmail,
           client_name:  clientName,
-          your_phone:   "+91 98765 43210",   // ← your real phone
+          your_phone:   "+91 7200960676",   // ← your real phone
           your_website: "yourwebsite.com",    // ← your real URL
         },
         EMAILJS_PUBLIC_KEY
@@ -117,19 +117,19 @@ export default function Contact() {
             <li>
               <a href="tel:+919876543210" className="contact-info-link">
                 <span className="contact-icon"><i className="fa-solid fa-phone" /></span>
-                <span>+91 98765 43210</span>
+                <span>+91 7200960676</span>
               </a>
             </li>
             <li>
-              <a href="mailto:duraiprakash08@gmail.com" className="contact-info-link">
+              <a href="mailto:metoyourcode@gmail.com" className="contact-info-link">
                 <span className="contact-icon"><i className="fa-solid fa-envelope" /></span>
-                <span>duraiprakash08@gmail.com</span>
+                <span>metoyourcode@gmail.com</span>
               </a>
             </li>
             <li>
               <span className="contact-info-link static">
                 <span className="contact-icon"><i className="fa-solid fa-location-dot" /></span>
-                <span>Your City, India</span>
+                <span>Chennai, India</span>
               </span>
             </li>
           </ul>

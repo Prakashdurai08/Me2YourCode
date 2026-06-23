@@ -1,6 +1,6 @@
 import "./WhatsAppFloat.css";
 
-const WHATSAPP_NUMBER = "919876543210"; // Replace with your number
+const WHATSAPP_NUMBER = "917200960676"; // Replace with your number
 
 export default function WhatsAppFloat() {
   return (
