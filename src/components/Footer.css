@@ -1,45 +1,185 @@
+/* Outer wrapper sits on the purple background, adds bottom spacing */
+.footer-outer {
+  padding: 0 0 1rem;
+}
+
+/* Footer card — uses .container for same width/margin as other white cards */
 .footer {
   background: var(--white);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  margin-top: 1rem;
-  padding: 1.5rem 0 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
 }
 
-.footer-inner {
+/* ── Main body ── */
+.footer-body {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1.4fr;
+  gap: 3rem;
+  padding: 2.5rem 2rem 2rem;
+}
+
+/* Brand */
+.footer-brand {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.9rem;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-logo {
+  height: 70px;
+  width: auto;
+}
+
+.footer-tagline {
+  font-size: 0.88rem;
   color: var(--text-muted);
+  line-height: 1.7;
 }
 
-.footer-social {
+.footer-socials {
   display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.footer-social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(106, 75, 201, 0.08);
+  color: var(--purple);
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  border: 1.5px solid var(--border);
+}
+
+.footer-social-btn:hover {
+  background: var(--social-color, var(--purple));
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-3px) scale(1.08);
+}
+
+/* Quick links */
+.footer-links h4,
+.footer-cta-col h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.footer-links ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
-.footer-social a {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--purple);
-  color: var(--white);
-  display: grid;
-  place-items: center;
-  font-size: 0.85rem;
-  transition: var(--transition);
+.footer-links li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  transition: color 0.3s ease, gap 0.3s ease;
 }
 
-.footer-social a:hover {
-  background: var(--purple-dark);
-  transform: scale(1.08);
+.footer-links li a i {
+  font-size: 0.65rem;
+  color: var(--purple);
 }
 
-@media (max-width: 480px) {
-  .footer-inner {
+.footer-links li a:hover {
+  color: var(--purple);
+  gap: 0.75rem;
+}
+
+/* CTA column */
+.footer-cta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-cta-col p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.footer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.footer-wa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #25d366;
+  transition: opacity 0.3s ease;
+}
+
+.footer-wa-link:hover { opacity: 0.8; }
+.footer-wa-link i { font-size: 1.1rem; }
+
+/* ── Bottom bar ── */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding: 1rem 2rem;
+}
+
+.footer-heart {
+  color: #ef4444;
+  animation: heartBeat 1.4s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.25); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
+  .footer-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-body {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.25rem 1.5rem;
+    gap: 1.75rem;
+  }
+
+  .footer-brand {
+    grid-column: auto;
+  }
+
+  .footer-bottom {
     flex-direction: column;
     text-align: center;
+    padding: 1rem 1.25rem;
   }
 }

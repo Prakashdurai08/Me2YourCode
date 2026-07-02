@@ -4,7 +4,7 @@ import useReveal from "../hooks/useReveal";
 import "./Contact.css";
 
 // ═══════════════════════════════════════════════════
-// ✅ PASTE YOUR KEYS HERE — only 4 values to change
+// Keys — move to .env when ready (see .env.example)
 // ═══════════════════════════════════════════════════
 const WEB3FORMS_KEY       = "635fa833-b858-420f-82d0-44ef55f56d72";
 const EMAILJS_SERVICE_ID  = "service_rfqtxq8";
@@ -30,9 +30,9 @@ export default function Contact() {
     const clientMsg    = formRef.current.querySelector('[name="message"]').value;
 
     try {
-
       // ────────────────────────────────────────────────
-      // CALL 1 — Web3Forms → Full enquiry details TO YOU
+      // CALL 1 — Web3Forms → enquiry details TO YOU
+      // This is the critical call — drives the success/fail shown to user
       // ────────────────────────────────────────────────
       const ownerData = new FormData();
       ownerData.append("access_key",  WEB3FORMS_KEY);
@@ -51,33 +51,38 @@ export default function Contact() {
       });
       const ownerJson = await ownerRes.json();
 
-      // ────────────────────────────────────────────────
-      // CALL 2 — EmailJS → Clean thank-you TO CLIENT
-      // ────────────────────────────────────────────────
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          to_email:     clientEmail,
-          client_name:  clientName,
-          your_phone:   "+91 7200960676",   // ← your real phone
-          your_website: "yourwebsite.com",    // ← your real URL
-        },
-        EMAILJS_PUBLIC_KEY
-      );
-
-      // ────────────────────────────────────────────────
-      // Show result
-      // ────────────────────────────────────────────────
       if (ownerJson.success) {
+        // ────────────────────────────────────────────────
+        // CALL 2 — EmailJS → thank-you TO CLIENT
+        // Runs silently — failure never shown to user
+        // ────────────────────────────────────────────────
+        try {
+          await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+              to_email:     clientEmail,
+              client_name:  clientName,
+              your_phone:   "+91 72009 60676",
+              your_website: "me2yourcode.in",
+            },
+            EMAILJS_PUBLIC_KEY
+          );
+        } catch (emailErr) {
+          // EmailJS failed — log quietly, don't affect UX
+          console.warn("EmailJS thank-you skipped:", emailErr?.text || emailErr);
+        }
+
+        // Always show success if Web3Forms worked
         setStatus({
-          msg: "Message sent! Check your email for confirmation.",
+          msg: "Message sent! I'll get back to you within 24 hours. 🙌",
           type: "success",
         });
         formRef.current.reset();
+
       } else {
         setStatus({
-          msg: "Something went wrong. Please try WhatsApp.",
+          msg: "Something went wrong. Please WhatsApp me directly.",
           type: "error",
         });
       }
@@ -85,7 +90,7 @@ export default function Contact() {
     } catch (err) {
       console.error("Form error:", err);
       setStatus({
-        msg: "Network error. Please try WhatsApp.",
+        msg: "Network error. Please WhatsApp me directly.",
         type: "error",
       });
     } finally {
@@ -115,9 +120,9 @@ export default function Contact() {
 
           <ul className="contact-info">
             <li>
-              <a href="tel:+919876543210" className="contact-info-link">
+              <a href="tel:+917200960676" className="contact-info-link">
                 <span className="contact-icon"><i className="fa-solid fa-phone" /></span>
-                <span>+91 7200960676</span>
+                <span>+91 72009 60676</span>
               </a>
             </li>
             <li>
@@ -139,11 +144,7 @@ export default function Contact() {
         <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
 
           {/* Honeypot spam protection */}
-          <input
-            type="checkbox"
-            name="botcheck"
-            style={{ display: "none" }}
-          />
+          <input type="checkbox" name="botcheck" style={{ display: "none" }} />
 
           <div className="form-row">
             <div className="form-field">
