@@ -64,9 +64,9 @@ export default function Hero() {
 
             <div className="hero-social">
               <span>Follow me on</span>
-              <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f" /></a>
-              <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram" /></a>
-              <a href="#" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in" /></a>
+              <a href="https://www.facebook.com/share/18x7Xrnj21/" aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hero-social-btn" style={{ "--social-color": "#1877f2" }}><i className="fa-brands fa-facebook-f" /></a>
+              <a href="https://instagram.com/metoyourcode" aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="hero-social-btn" style={{ "--social-color": "#e1306c" }}><i className="fa-brands fa-instagram" /></a>
+              <a href="https://linkedin.com/in/meto-yourcode08" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="hero-social-btn" style={{ "--social-color": "#0077b5" }}><i className="fa-brands fa-linkedin-in" /></a>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import "./Footer.css";
 const SOCIAL = [
   { label: "WhatsApp",  icon: "fa-brands fa-whatsapp",    href: "https://wa.me/917200960676", color: "#25d366" },
   { label: "Instagram", icon: "fa-brands fa-instagram",   href: "https://instagram.com/metoyourcode", color: "#e1306c" },
-  { label: "LinkedIn",  icon: "fa-brands fa-linkedin-in", href: "#", color: "#0077b5" },
+  { label: "LinkedIn",  icon: "fa-brands fa-linkedin-in", href: "https://linkedin.com/in/meto-yourcode08", color: "#0077b5" },
   { label: "Facebook",  icon: "fa-brands fa-facebook-f",  href: "https://www.facebook.com/share/18x7Xrnj21/", color: "#1877f2" },
 ];
 
