@@ -1,17 +1,49 @@
+// src/pages/ProjectsPage.jsx
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../data/projects";
 import useReveal from "../hooks/useReveal";
 import "./ProjectsPage.css";
 
+function useRevealList(count) {
+  const refs = useRef([]);
+  refs.current = Array.from({ length: count }, (_, i) => refs.current[i] ?? null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -20px 0px" }
+    );
+
+    refs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [count]);
+
+  return (index) => (el) => {
+    refs.current[index] = el;
+  };
+}
+
 export default function ProjectsPage() {
   const navigate = useNavigate();
-  const refs = Array.from({ length: projects.length }, () => useReveal());
+  const headRef = useReveal();
+  const setRef = useRevealList(projects.length);
 
   return (
     <main className="projects-page">
       <div className="container">
 
-        <div className="projects-page-head reveal" ref={useReveal()}>
+        <div className="projects-page-head reveal" ref={headRef}>
           <span className="badge projects-badge">Portfolio</span>
           <h1>All <span className="accent">Projects</span></h1>
           <p>Every project is a story — here are mine.</p>
@@ -22,7 +54,7 @@ export default function ProjectsPage() {
             <article
               className="proj-grid-card"
               key={p.id}
-              ref={refs[i]}
+              ref={setRef(i)}
               onClick={() => navigate(`/projects/${p.slug}`)}
               role="button"
               tabIndex={0}

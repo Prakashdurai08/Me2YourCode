@@ -6,10 +6,10 @@ import "./Contact.css";
 // ═══════════════════════════════════════════════════
 // Keys — move to .env when ready (see .env.example)
 // ═══════════════════════════════════════════════════
-const WEB3FORMS_KEY       = "635fa833-b858-420f-82d0-44ef55f56d72";
-const EMAILJS_SERVICE_ID  = "service_rfqtxq8";
-const EMAILJS_TEMPLATE_ID = "template_8nbqtvh";
-const EMAILJS_PUBLIC_KEY  = "eIQMIpO5LGVA4iaZp";
+const WEB3FORMS_KEY       = "635fa833-b858-420f-82d0-44ef55f56d72"; // keep as-is
+const EMAILJS_SERVICE_ID  = "service_a08cb3d";   // ← paste after setup
+const EMAILJS_TEMPLATE_ID = "template_llu1rrk";  // ← paste after setup
+const EMAILJS_PUBLIC_KEY  = "ElUlf9ZkpKTQhketU";   // ← paste after setup
 // ═══════════════════════════════════════════════════
 
 export default function Contact() {
@@ -36,7 +36,7 @@ export default function Contact() {
       // ────────────────────────────────────────────────
       const ownerData = new FormData();
       ownerData.append("access_key",  WEB3FORMS_KEY);
-      ownerData.append("subject",     "🔔 New Project Enquiry — Me to Your Code");
+      ownerData.append("subject",     "🔔 New Project Enquiry — MetoYourCode");
       ownerData.append("from_name",   "Me to Your Code Website");
       ownerData.append("replyto",     clientEmail);
       ownerData.append("name",        clientName);
@@ -64,7 +64,7 @@ export default function Contact() {
               to_email:     clientEmail,
               client_name:  clientName,
               your_phone:   "+91 72009 60676",
-              your_website: "me2yourcode.in",
+              your_website: "metoyourcode.online",
             },
             EMAILJS_PUBLIC_KEY
           );
