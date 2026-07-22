@@ -191,3 +191,11 @@
     padding: 0.6rem 1rem;
   }
 }
+/* Add at the bottom of Header.css */
+.nav-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+}

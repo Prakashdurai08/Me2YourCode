@@ -57,6 +57,16 @@
   transform: translateY(0) scale(1);
 }
 
+/* Safety net — if observer never fires, cards are still visible */
+@media (prefers-reduced-motion: no-preference) {
+  .projects-all-grid:not(:has(.proj-grid-card.visible)) .proj-grid-card {
+    animation: cardFallback 0.01s 0.8s forwards;
+  }
+}
+@keyframes cardFallback {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .proj-grid-card:nth-child(1) { --reveal-delay: 0s; }
 .proj-grid-card:nth-child(2) { --reveal-delay: 0.08s; }
 .proj-grid-card:nth-child(3) { --reveal-delay: 0.16s; }

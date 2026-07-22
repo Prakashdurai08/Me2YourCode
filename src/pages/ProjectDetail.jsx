@@ -23,7 +23,8 @@ export default function ProjectDetail() {
   }, [project]);
 
   /* Scroll to top on mount */
-  useEffect(() => window.scrollTo({ top: 0 }), [slug]);
+  // REPLACE — braces mean it returns undefined (correct)
+useEffect(() => { window.scrollTo({ top: 0 }); }, [slug]);
 
   /* Keyboard close lightbox */
   useEffect(() => {

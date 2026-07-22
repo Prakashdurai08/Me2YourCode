@@ -1,23 +1,25 @@
+// src/components/Header.jsx
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 
 const NAV_LINKS = [
-  { label: "About",       href: "/#about" },
-  { label: "Portfolio",   href: "/#portfolio" },
-  { label: "Services",    href: "/#services" },
-  { label: "Pricing",     href: "/#pricing" },
-  { label: "Testimonial", href: "/#testimonial" },
-  { label: "Contact",     href: "/#contact" },
+  { label: "About",       href: "about" },
+  { label: "Portfolio",   href: "portfolio" },
+  { label: "Services",    href: "services" },
+  { label: "Pricing",     href: "pricing" },
+  { label: "Testimonial", href: "testimonial" },
+  { label: "Contact",     href: "contact" },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen]           = useState(false);
   const [activeSection, setActiveSection] = useState("about");
   const [scrolled, setScrolled]           = useState(false);
-  const location = useLocation();
-  const isHome   = location.pathname === "/";
-  const navRef   = useRef(null);
+  const location  = useLocation();
+  const navigate  = useNavigate();
+  const isHome    = location.pathname === "/";
+  const navRef    = useRef(null);
 
   useEffect(() => {
     if (!isHome) return;
@@ -40,9 +42,7 @@ export default function Header() {
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) {
-        setMenuOpen(false);
-      }
+      if (navRef.current && !navRef.current.contains(e.target)) setMenuOpen(false);
     };
     document.addEventListener("mousedown", handler);
     document.addEventListener("touchstart", handler);
@@ -57,11 +57,17 @@ export default function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const handleNavClick = (href) => {
+  // Works from ANY page — goes home first then scrolls
+  const handleNavClick = (sectionId) => {
     setMenuOpen(false);
-    if (isHome && href.startsWith("/#")) {
-      const id = href.replace("/#", "");
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if (isHome) {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Navigate home, then scroll after page loads
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+      }, 400);
     }
   };
 
@@ -87,30 +93,15 @@ export default function Header() {
           </Link>
 
           <nav className={`nav ${menuOpen ? "open" : ""}`} id="nav" aria-label="Main navigation">
-            {NAV_LINKS.map(({ label, href }) => {
-              const sectionId = href.replace("/#", "");
-              const isActive  = isHome && activeSection === sectionId;
-
-              return isHome ? (
-                
-                 <a key={label}
-                  href={href}
-                  className={`nav-link ${isActive ? "active" : ""}`}
-                  onClick={(e) => { e.preventDefault(); handleNavClick(href); }}
-                >
-                  {label}
-                </a>
-              ) : (
-                <Link
-                  key={label}
-                  to={href}
-                  className="nav-link"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {label}
-                </Link>
-              );
-            })}
+            {NAV_LINKS.map(({ label, href }) => (
+              <button
+                key={label}
+                className={`nav-link ${isHome && activeSection === href ? "active" : ""}`}
+                onClick={() => handleNavClick(href)}
+              >
+                {label}
+              </button>
+            ))}
           </nav>
 
           <button
@@ -119,9 +110,7 @@ export default function Header() {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
           >
-            <span />
-            <span />
-            <span />
+            <span /><span /><span />
           </button>
 
         </div>

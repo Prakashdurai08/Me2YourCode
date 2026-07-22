@@ -2,42 +2,51 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../data/projects";
-import useReveal from "../hooks/useReveal";
 import "./ProjectsPage.css";
-
-function useRevealList(count) {
-  const refs = useRef([]);
-  refs.current = Array.from({ length: count }, (_, i) => refs.current[i] ?? null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -20px 0px" }
-    );
-
-    refs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [count]);
-
-  return (index) => (el) => {
-    refs.current[index] = el;
-  };
-}
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
-  const headRef = useReveal();
-  const setRef = useRevealList(projects.length);
+  const headRef  = useRef(null);
+  const gridRef  = useRef(null);
+
+  useEffect(() => {
+    // Give scroll-to-top time to settle, then observe + force-show
+    const timer = setTimeout(() => {
+      const allReveal = [
+        headRef.current,
+        ...(gridRef.current
+          ? Array.from(gridRef.current.querySelectorAll(".proj-grid-card"))
+          : []),
+      ].filter(Boolean);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.05, rootMargin: "0px 0px 0px 0px" }
+      );
+
+      allReveal.forEach((el) => observer.observe(el));
+
+      // Hard fallback — make everything visible after 600ms no matter what
+      const fallback = setTimeout(() => {
+        allReveal.forEach((el) => el.classList.add("visible"));
+        observer.disconnect();
+      }, 600);
+
+      return () => {
+        observer.disconnect();
+        clearTimeout(fallback);
+      };
+    }, 120); // wait for scroll-to-top to complete
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <main className="projects-page">
@@ -45,16 +54,15 @@ export default function ProjectsPage() {
 
         <div className="projects-page-head reveal" ref={headRef}>
           <span className="badge projects-badge">Portfolio</span>
-          <h1>All <span className="accent">Projects</span></h1>
+          <h1>All <span className="accent" style={{ color: "#1a1a1a" }}>Projects</span></h1>
           <p>Every project is a story — here are mine.</p>
         </div>
 
-        <div className="projects-all-grid">
+        <div className="projects-all-grid" ref={gridRef}>
           {projects.map((p, i) => (
             <article
               className="proj-grid-card"
               key={p.id}
-              ref={setRef(i)}
               onClick={() => navigate(`/projects/${p.slug}`)}
               role="button"
               tabIndex={0}

@@ -6,7 +6,7 @@ export const projects = [
   {
     id: 1,
     title: "M2Y POS",
-    slug: "Restaurant Billing POS",
+    slug: "restaurant-billing-pos",
     shortDesc: "Smart billing software for local eateries — combining speed, accuracy, and easy menu customization",
     description:
       "A modern POS solution built for small restaurants and hotels — offering fast billing, easy menu handling, clear day‑end sales reports, and receipts in both digital and printed form to keep daily operations simple and efficient.",
@@ -42,7 +42,7 @@ export const projects = [
   {
     id: 2,
     title: "MediCare Clinic",
-    slug: "Clinic-Management Software",
+    slug: "clinic-management-software",
     shortDesc: "Online appointment booking, live token queue, doctor dashboard and TV token board — built for real clinics, handed over to the client.",
     description:
       "A complete clinic digitalization system built with React + Vite and Google Sheets as the backend. Patients book appointment slots online 24/7 from any device. The reception staff manages walk-ins, marks arrivals and prints token slips from a live dashboard. The doctor gets a separate personal view showing who's currently being seen, their reason for visit, and who's next — with one tap to call the next patient. A full-screen TV token board runs in the waiting room. The entire system is deployed on Vercel with a custom domain and handed over to the clinic — no monthly fees, no vendor lock-in.",
@@ -83,7 +83,7 @@ export const projects = [
   {
   id: 3,
   title: "Bodycraft",
-  slug: "Beauty Salon Management Website",
+  slug: "beauty-salon-management-website",
   shortDesc: "Bridal beauty platform — seamless appointment booking and stunning portfolio showcase",
   description:
     "A production-ready beauty salon website built for Body Craft by Hollywood Saloon — featuring a full bridal portfolio gallery, transparent service pricing, WhatsApp-integrated appointment booking, and a mobile-first design that showcases the salon's Indian bridal expertise to attract and convert new clients.",
