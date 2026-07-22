@@ -62,6 +62,7 @@ export default function Contact() {
             EMAILJS_TEMPLATE_ID,
             {
               to_email:     clientEmail,
+              email:        clientEmail,
               client_name:  clientName,
               your_phone:   "+91 72009 60676",
               your_website: "metoyourcode.online",
