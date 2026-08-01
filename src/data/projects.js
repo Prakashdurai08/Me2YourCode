@@ -5,7 +5,7 @@
 export const projects = [
   {
     id: 1,
-    title: "M2Y POS",
+    title: "Slipzo",
     slug: "restaurant-billing-pos",
     shortDesc: "Smart billing software for local eateries — combining speed, accuracy, and easy menu customization",
     description:
