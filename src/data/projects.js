@@ -36,7 +36,7 @@ export const projects = [
       "Dark mode support",
       "Fully accessible (WCAG 2.1 AA)",
     ],
-    liveDemoUrl: "https://example.com",
+    liveDemoUrl: "https://play.google.com/store/apps/details?id=com.slipzo.app&pcampaignid=web_share",
     category: "Restaurant Billing POS",
   },
   {
